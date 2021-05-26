@@ -1,0 +1,314 @@
+<h1 id="javascript-tips">JavaScript Tips</h1>
+<ul>
+    <li><a href="#javascript-tips">JavaScript Tips</a>
+        <ul>
+            <li><a href="#frontend-es6-syntax">Frontend (ES6 syntax)</a>
+                <ul>
+                    <li><a href="#module-import">Module import</a></li>
+                    <li><a href="#jsx">JSX</a></li>
+                    <li><a href="#react-components">React components</a></li>
+                    <li><a href="#props">Props</a></li>
+                    <li><a href="#react-hooks">React hooks</a></li>
+                    <li><a href="#useeffect">useEffect</a></li>
+                </ul>
+            </li>
+            <li><a href="#backend-commonjs-syntax">Backend (CommonJS syntax)</a>
+                <ul>
+                    <li><a href="#module-import-1">Module import</a></li>
+                </ul>
+            </li>
+            <li><a href="#general-javascript-tips">General JavaScript Tips</a>
+                <ul>
+                    <li><a href="#equality">Equality</a></li>
+                    <li><a href="#string-interpolation">String interpolation</a></li>
+                    <li><a href="#functions">Functions</a></li>
+                    <li><a href="#variables-and-objects">Variables and Objects</a></li>
+                    <li><a href="#object-destructuring">Object destructuring</a></li>
+                    <li><a href="#spread">Spread</a></li>
+                    <li><a href="#array-destructuring">Array destructuring</a></li>
+                    <li><a href="#array-methods">Array methods</a></li>
+                    <li><a href="#asyncawait">Async/await</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+<h2 id="frontend-es6-syntax-">Frontend (ES6 syntax)</h2>
+<h3 id="module-import">Module import</h3>
+<p>To import a library:</p>
+<pre><code class="lang-jsx"><span class="hljs-keyword">import</span> <span class="hljs-keyword">name</span> from 'library-<span class="hljs-keyword">name</span>';
+</code></pre>
+<p>To import a file in our own project:</p>
+<pre><code class="lang-jsx"><span class="hljs-keyword">import</span> name <span class="hljs-keyword">from</span> <span class="hljs-string">'./myFile.jsx'</span>;
+<span class="hljs-comment">//Note that the path is relative to the current code file, and you have to</span>
+<span class="hljs-comment">//put ./ in front</span>
+</code></pre>
+<p>For files outside the current folder, go up a folder with <code>..</code>:</p>
+<pre><code class="lang-jsx"><span class="hljs-keyword">import</span> name <span class="hljs-keyword">from</span> <span class="hljs-string">'./../anotherFile.jsx'</span>;
+<span class="hljs-comment">// which can be simplified to</span>
+<span class="hljs-keyword">import</span> name <span class="hljs-keyword">from</span> <span class="hljs-string">'../anotherFile.jsx'</span>;
+</code></pre>
+<p>You can import anything: <code>.js</code>, <code>.jsx</code>, <code>.css</code>, <code>.png</code>, etc</p>
+<h3 id="jsx">JSX</h3>
+<p>Files ending with <code>.jsx</code> are javascript files with react code, it allows you
+    to write html inside javascript:</p>
+<pre><code class="lang-jsx"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">returnParagraph</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>A paragraph...<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span>;
+}
+</code></pre>
+<p>There are minor differences between real HTML and JSX:
+    HTML:</p>
+<pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"my-class"</span> style=<span class="hljs-string">"display: block"</span>&gt;Some <span class="hljs-built_in">text</span>...&lt;/<span class="hljs-keyword">div</span>&gt;
+</code></pre>
+<p>JSX:</p>
+<pre><code class="lang-jsx"><span class="hljs-keyword">return</span> (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"my-class"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">display:</span> '<span class="hljs-attr">block</span>' }}&gt;</span>
+    Some text...
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+);
+</code></pre>
+<h3 id="react-components">React components</h3>
+<p>Our app is split into react components and sub-components, and each component
+    is a function that returns the html of that component</p>
+<pre><code class="lang-jsx"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MyComponent</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>A title<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>A paragraph<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</code></pre>
+<h3 id="props">Props</h3>
+<p>To pass arguments (called props) to children components:</p>
+<pre><code class="lang-jsx"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ChildComponent</span>(<span class="hljs-params">props</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{props.helloText}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ParentComponent</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ChildComponent</span> <span class="hljs-attr">helloText</span>=<span class="hljs-string">"hello world"</span> /&gt;</span>;
+}</span>
+</code></pre>
+<p>The above can be written as:</p>
+<pre><code class="lang-jsx"><span class="hljs-comment">// Using object destructuring, see below</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ChildComponent</span>(<span class="hljs-params">{ helloText }</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{helloText}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ParentComponent</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ChildComponent</span> <span class="hljs-attr">helloText</span>=<span class="hljs-string">"hello world"</span> /&gt;</span>;
+}</span>
+</code></pre>
+<h3 id="react-hooks">React hooks</h3>
+<p>React Hooks are common in function components, read how to use them in
+    <a href="https://reactjs.org/docs/hooks-overview.html">https://reactjs.org/docs/hooks-overview.html</a>
+</p>
+<h3 id="useeffect">useEffect</h3>
+<p>One quick tip is:
+    React re-renders your component each time something changes
+    in the component:</p>
+<pre><code class="lang-jsx"><span class="hljs-keyword">import</span> { Button } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-bootstrap'</span>;
+<span class="hljs-keyword">import</span> { useState } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MyComponentWithState</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [counter, setCounter] = useState(<span class="hljs-number">0</span>);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Render!'</span>);
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{counter}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setCounter(counter + 1)}&gt;Add 1<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+<span class="hljs-comment">// You will see a lot of console.log when you click the button even though the</span>
+<span class="hljs-comment">// whole page didn't reload</span>
+</code></pre>
+<p>To only execute code when the component is first loaded, use useEffect:</p>
+<pre><code class="lang-jsx"><span class="hljs-keyword">import</span> { Button } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-bootstrap'</span>;
+<span class="hljs-keyword">import</span> { useEffect, useState } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MyComponentWithState2</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [counter, setCounter] = useState(<span class="hljs-number">0</span>);
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'only printed once'</span>);
+  }, []); <span class="hljs-comment">// empty array is necessary here!</span>
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{counter}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setCounter(counter + 1)}&gt;Add 1<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</code></pre>
+<p>To execute code when a value changes, include that value in useEffect:</p>
+<pre><code class="lang-jsx"><span class="hljs-keyword">import</span> { Button } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-bootstrap'</span>;
+<span class="hljs-keyword">import</span> { useEffect, useState } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MyComponentWithState3</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [counter, setCounter] = useState(<span class="hljs-number">0</span>);
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'counter changed'</span>);
+  }, [counter]); <span class="hljs-comment">// including counter in the array causes this</span>
+  <span class="hljs-comment">// function to be run every time counter changes</span>
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{counter}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setCounter(counter + 1)}&gt;Add 1<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</code></pre>
+<h2 id="backend-commonjs-syntax-">Backend (CommonJS syntax)</h2>
+<h3 id="module-import">Module import</h3>
+<p>To import a library</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> <span class="hljs-keyword">name</span> = require(<span class="hljs-string">'library-name'</span>);
+</code></pre>
+<p>To import our own file</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> <span class="hljs-keyword">name</span> = require(<span class="hljs-string">'./myFile.js'</span>);
+<span class="hljs-comment">// the way to write a path is the same as frontend, we just use require here</span>
+<span class="hljs-comment">// instead of import</span>
+</code></pre>
+<h2 id="general-javascript-tips">General JavaScript Tips</h2>
+<h3 id="equality">Equality</h3>
+<p>To check if two things are equal:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> a = <span class="hljs-string">'1'</span>;
+<span class="hljs-keyword">let</span> b = <span class="hljs-number">1</span>;
+<span class="hljs-built_in">console</span>.log(a == b); <span class="hljs-regexp">// true //</span> NEVER use <span class="hljs-keyword">this</span>, VERY confusing
+<span class="hljs-built_in">console</span>.log(a === b); <span class="hljs-regexp">// false //</span> Always use <span class="hljs-keyword">this</span>
+
+<span class="hljs-built_in">console</span>.log(a != b); <span class="hljs-regexp">// false //</span> NEVER use <span class="hljs-keyword">this</span>, VERY confusing
+<span class="hljs-built_in">console</span>.log(a !== b); <span class="hljs-regexp">// true //</span> Always use <span class="hljs-keyword">this</span>
+</code></pre>
+<h3 id="string-interpolation">String interpolation</h3>
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> <span class="hljs-attr">a</span> = <span class="hljs-number">10</span>;
+<span class="hljs-keyword">let</span> <span class="hljs-attr">b</span> = <span class="hljs-number">20</span>;
+console.log('<span class="hljs-attr">a</span> = ' + a + ', <span class="hljs-attr">b</span> = ' + b);
+</code></pre>
+<p>Can be written as:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> a = <span class="hljs-number">10</span>;
+<span class="hljs-keyword">let</span> b = <span class="hljs-number">20</span>;
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">`a = <span class="hljs-subst">${a}</span>, b = <span class="hljs-subst">${b}</span>`</span>);
+</code></pre>
+<h3 id="functions">Functions</h3>
+<p>To define a function:</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">functionName</span><span class="hljs-params">(parameter1, parameter2)</span> </span>{
+  <span class="hljs-comment">// do sth</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'some value'</span>;
+}
+</code></pre>
+<p>You can also define arrow functions</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-title">functionName</span> = <span class="hljs-params">(parameter1, parameter2)</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-string">'some value'</span>;
+};
+</code></pre>
+<p>And if an arrow function has 1 line only, you can omit the <code>{}</code>:</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-title">functionName</span> = <span class="hljs-params">(parameter1, parameter2)</span> =&gt;</span> <span class="hljs-string">'some value'</span>;
+<span class="hljs-regexp">//</span> <span class="hljs-string">'some value'</span> <span class="hljs-keyword">is</span> returned directly above
+</code></pre>
+<p>If an arrow function has 1 parameter only, you can omit the <code>()</code>:</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-title">functionName</span> = <span class="hljs-params">(parameter)</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(parameter);
+</code></pre>
+<p>Quick function tutorial:
+    <a href="https://www.youtube.com/watch?v=gigtS_5KOqo">https://www.youtube.com/watch?v=gigtS_5KOqo</a> (12m30s)
+</p>
+<h3 id="variables-and-objects">Variables and Objects</h3>
+<p>There are 3 ways to define a variable</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> a = <span class="hljs-number">0</span>; <span class="hljs-comment">// NEVER USE THIS</span>
+<span class="hljs-keyword">let</span> b = <span class="hljs-number">0</span>; <span class="hljs-comment">// ok to use</span>
+<span class="hljs-keyword">const</span> c = <span class="hljs-number">0</span>; <span class="hljs-comment">// value can never be changed</span>
+</code></pre>
+<p>To define an empty object</p>
+<pre><code class="lang-js"><span class="hljs-attribute">let a</span> = {};
+</code></pre>
+<p>To define an object with content</p>
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> <span class="hljs-keyword">short</span> = <span class="hljs-literal">null</span>;
+<span class="hljs-keyword">let</span> b = {
+  propertyA: <span class="hljs-string">'sth'</span>,
+  propertyB: <span class="hljs-literal">false</span>,
+  <span class="hljs-keyword">short</span>: <span class="hljs-keyword">short</span>,
+};
+</code></pre>
+<p>You can add properties to object by just assigning them</p>
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> obj = {};
+obj.propA = <span class="hljs-string">'hello'</span>;
+obj[<span class="hljs-string">'propB'</span>] = <span class="hljs-string">'world'</span>; // Same <span class="hljs-keyword">as</span> obj.propB = <span class="hljs-string">'world'</span>;
+console.log(obj); // { propA: <span class="hljs-string">'hello'</span>, propB: <span class="hljs-string">'world'</span> }
+</code></pre>
+<p>In the above, we are a property <code>short</code> on the object, and its value is stored
+    in the variable that is also called <code>short</code>, so we can use a short form here:</p>
+<pre><code class="lang-js">let <span class="hljs-keyword">short</span> = <span class="hljs-keyword">null</span>;
+let b = {
+  propertyA: 'sth',
+  propertyB: <span class="hljs-keyword">false</span>,
+  <span class="hljs-keyword">short</span>, // <span class="hljs-keyword">short</span> <span class="hljs-keyword">for</span> <span class="hljs-keyword">short</span>: <span class="hljs-keyword">short</span>
+};
+</code></pre>
+<h3 id="object-destructuring">Object destructuring</h3>
+<p>If we want to use some variables to store the value of some properties in an
+    object:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> <span class="hljs-attr">obj</span> = { propA: <span class="hljs-number">10</span>, propB: <span class="hljs-number">20</span>, propC: <span class="hljs-number">30</span>, propD: <span class="hljs-number">40</span> };
+<span class="hljs-keyword">let</span> <span class="hljs-attr">propA</span> = obj.propA;
+<span class="hljs-keyword">let</span> <span class="hljs-attr">propB</span> = obj.propB;
+// <span class="hljs-attr">propA</span> = <span class="hljs-number">10</span>
+// <span class="hljs-attr">propB</span> = <span class="hljs-number">20</span>
+</code></pre>
+<p>We can use object destructuring:
+    <a href="https://www.youtube.com/watch?v=UgEaJBz3bjY">https://www.youtube.com/watch?v=UgEaJBz3bjY</a> (3m30s)
+</p>
+<pre><code class="lang-js">let obj = { <span class="hljs-string">propA:</span> <span class="hljs-number">10</span>, <span class="hljs-string">propB:</span> <span class="hljs-number">20</span>, <span class="hljs-string">propC:</span> <span class="hljs-number">30</span>, <span class="hljs-string">propD:</span> <span class="hljs-number">40</span> };
+let { propA, propB } = obj;
+<span class="hljs-comment">// propA = 10</span>
+<span class="hljs-comment">// propB = 20</span>
+</code></pre>
+<p>Object destructuring can be used when importing libraries:</p>
+<pre><code class="lang-js"><span class="hljs-comment">// frontend</span>
+<span class="hljs-keyword">import</span> { Button, Form } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-bootstrap'</span>;
+<span class="hljs-comment">// Importing react-bootstrap returns an object with many properties, we just</span>
+<span class="hljs-comment">// want Button and Form here</span>
+
+<span class="hljs-comment">// backend</span>
+<span class="hljs-keyword">const</span> {
+  requireAccessToken,
+  requireAdminAccess,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./helpers/requireAuth'</span>);
+<span class="hljs-comment">// Only import requireAccessToken and requireAdminAccess from requireAuth.js</span>
+</code></pre>
+<h3 id="spread">Spread</h3>
+<p>To merge two objects, use the spread syntax</p>
+<pre><code class="lang-js">let a = { p1: 123, p2: 456 };
+let b = { p3: 234, p4: 567 };
+let c = { ...a, ...b }; // { p1: 123, p2: 456, p3: 234, p4: 567 }
+</code></pre>
+<p>Combining object destructuring and the spread operator:</p>
+<pre><code class="lang-js">let obj = { <span class="hljs-string">propA:</span> <span class="hljs-number">10</span>, <span class="hljs-string">propB:</span> <span class="hljs-number">20</span>, <span class="hljs-string">propC:</span> <span class="hljs-number">30</span>, <span class="hljs-string">propD:</span> <span class="hljs-number">40</span> };
+let { propA, propB, ...others } = obj;
+<span class="hljs-comment">// propA = 10</span>
+<span class="hljs-comment">// propB = 20</span>
+<span class="hljs-comment">// others = { propC: 30, propD: 40 }</span>
+</code></pre>
+<h3 id="array-destructuring">Array destructuring</h3>
+<p>Same thing for arrays</p>
+<pre><code class="lang-js">let a = []; // empty<span class="hljs-built_in"> array
+</span>let b = [1, 2, 3];
+let c = [4, 5, 6];
+let d = [...b, ...c]; // [1, 2, 3, 4, 5, 6]
+</code></pre>
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> arr = [<span class="hljs-string">'hello'</span>, <span class="hljs-string">'world'</span>, <span class="hljs-string">'js'</span>, <span class="hljs-string">'jsx'</span>];
+<span class="hljs-keyword">let</span> [a, b, ...c] = arr; <span class="hljs-comment">// array destructuring depends on index (a gets the first element, b gets the second)</span>
+<span class="hljs-comment">// a = 'hello'</span>
+<span class="hljs-comment">// b = 'world'</span>
+<span class="hljs-comment">// c = ['js', 'jsx']</span>
+</code></pre>
+<h3 id="array-methods">Array methods</h3>
+<p>There are useful functions that help us with arrays, e.g. <code>reduce</code>, <code>map</code>, <code>sort</code>,
+    <code>forEach</code>, <code>includes</code>, <code>some</code>, <code>find</code>, <code>findIndex</code>, ...</p>
+<ul>
+    <li><code>reduce</code>: <a
+            href="https://www.youtube.com/watch?v=tVCYa_bnITg">https://www.youtube.com/watch?v=tVCYa_bnITg</a> (1m30s)
+    </li>
+    <li><code>map</code>: <a
+            href="https://www.youtube.com/watch?v=DC471a9qrU4">https://www.youtube.com/watch?v=DC471a9qrU4</a> (1m30s)
+    </li>
+</ul>
+<h3 id="async-await">Async/await</h3>
+<p>Async/await is very common in our code. Learn more here:</p>
+<ul>
+    <li><a href="https://www.youtube.com/watch?v=RvYYCGs45L4">https://www.youtube.com/watch?v=RvYYCGs45L4</a> (1m30s)
+    </li>
+    <li><a href="https://www.youtube.com/watch?v=vn3tm0quoqE">https://www.youtube.com/watch?v=vn3tm0quoqE</a> (12m)</li>
+</ul>

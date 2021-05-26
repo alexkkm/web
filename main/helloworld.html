@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>JavaSctript</title>
+    <style>
+        .intro {
+            color: skyblue;
+        }
+
+        .button {
+            color: brown;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="intro">
+        <script>
+            document.write("<p id="message">Introduction message</p>");
+        </script>
+        <script src="changeContent.js"></script>
+        <button type="button" onclick="changeContent()">Introduction Button Content</button>
+    </div>
+
+    <div class="button">
+        <p id="p1">Original Text</p>
+        <button type="button" onclick="HelloWorldFunction()">Button Content</button>
+        <script>
+            function HelloWorldFunction() {
+                document.getElementById("p1").innerHTML = "Changed content";
+            }
+        </script>
+    </div>
+
+</body>
+
+</html>
