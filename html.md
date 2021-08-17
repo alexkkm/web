@@ -12,9 +12,8 @@ selector {property:value;}
 
 CSS实例:
 ```jsx
-p 
-{
+p {
     color:red;
     text-align:center;
-}
+    }
 ```
