@@ -1,3 +1,3 @@
-function switchPage(url){
+function routing(url){
     window.location.href = url;
 }
