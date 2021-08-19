@@ -9,3 +9,13 @@ html#HomePage{
     background-position: center;
     */
 }
+
+/* style for paragraph tag*/
+p{
+    font-family: "Times New Roman";
+}
+
+/* style for headline 1 tag*/
+h1{
+    font-family: "Times New Roman";
+}
