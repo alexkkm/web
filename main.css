@@ -1,0 +1,11 @@
+html#HomePage{
+    /* Put all backgorund properties in 1 line*/
+    background: white url('images/html.png') no-repeat center;
+
+    /*
+    background-color : white;   
+    background-image: url('images/html.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    */
+}
